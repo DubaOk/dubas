@@ -1,0 +1,21 @@
+1:"$Sreact.fragment"
+2:"/dubas/_next/static/chunks/08mika-44sn50.js"
+3:I[22016,["$2"],""]
+5:I[39756,["$2"],"default"]
+6:I[37457,["$2"],"default"]
+9:I[97367,["$2"],"OutletBoundary"]
+a:"$Sreact.suspense"
+c:"ViewportBoundary"
+d:I[97367,["$2"],"$c"]
+f:"MetadataBoundary"
+10:I[97367,["$2"],"$f"]
+12:I[68027,[],"default",1]
+:HL["/dubas/_next/static/chunks/3svryedgx26lj.css","style"]
+7:X
+8:[["children",{"s":"__PAGE__","h":512,"d":{"r":["$","$1","c",{"children":[null,null,["$","$L9",null,{"children":["$","$a",null,{"name":"Next.MetadataOutlet","children":"$@b"}]}]]}],"p":false,"v":null}}]]
+4:[["children",{"s":"/_not-found","h":512,"d":{"r":["$","$1","c",{"children":[null,["$","$L5",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L6",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],"p":false,"v":"$7"},"c":"$Q8"}]]
+0:{"P":null,"c":["","_not-found",""],"q":"","i":false,"t":{"t":{"s":"","h":528,"d":{"r":["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/dubas/_next/static/chunks/3svryedgx26lj.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/dubas/_next/static/chunks/08mika-44sn50.js","async":true,"nonce":"$undefined"}]],["$","html",null,{"lang":"ru","children":["$","body",null,{"children":["$","main",null,{"style":{"maxWidth":800,"margin":"15vh auto","padding":30},"children":[["$","p",null,{"style":{"color":"#00856a","marginBottom":20},"children":"Dubas / 404"}],["$","h1",null,{"style":{"fontSize":"clamp(36px, 7vw, 64px)","letterSpacing":"-2px"},"children":["Такой страницы нет.",["$","br",null,{}],"This page is missing."]}],["$","p",null,{"style":{"marginTop":28},"children":"Вернуться на главную / Back to the homepage"}],["$","div",null,{"style":{"display":"flex","gap":30,"marginTop":24},"children":[["$","$L3",null,{"href":"/","children":"Русский →"}],["$","$L3",null,{"href":"/en/","children":"English →"}]]}]]}]}]}]]}],"p":false,"v":null},"c":"$Q4"},"h":{"r":["$","$1","h",{"children":[["$","meta",null,{"name":"robots","content":"noindex"}],["$","$Ld",null,{"children":"$Le"}],["$","$L10",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$a",null,{"name":"Next.Metadata","children":"$L11"}]}],null]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"p":false,"v":null}},"m":"$undefined","G":["$12",[]],"S":true,"r":"$undefined","s":"$undefined","a":"$undefined","l":"$undefined","p":"$undefined","d":"$undefined","b":"VEnyucs9aleyICQv47ex0"}
+7:C
+e:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+b:null
+11:[]

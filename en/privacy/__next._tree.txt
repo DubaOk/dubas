@@ -1,0 +1,8 @@
+:HL["/dubas/_next/static/chunks/3svryedgx26lj.css","style"]
+:HL["/dubas/_next/static/media/manrope-s.p.3rjk17h6oms_8.ttf","font",{"crossOrigin":"","type":"font/ttf"}]
+:HL["/dubas/_next/static/chunks/1_vekj2y8e59j.css","style"]
+4:[["children",{"s":"__PAGE__","h":160}]]
+3:[["children",{"s":"privacy","h":96,"c":"$Q4"}]]
+2:[["children",{"s":"en","h":112,"c":"$Q3"}]]
+1:[["children",{"s":"(en)","h":112,"c":"$Q2"}]]
+0:{"b":"VEnyucs9aleyICQv47ex0","t":{"t":{"s":"","h":80,"c":"$Q1"}}}

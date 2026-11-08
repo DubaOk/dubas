@@ -1,0 +1,9 @@
+:HL["/dubas/_next/static/chunks/3d-d1d6k1j07q.css","style"]
+:HL["/dubas/_next/static/chunks/3svryedgx26lj.css","style"]
+:HL["/dubas/_next/static/media/manrope-s.p.3rjk17h6oms_8.ttf","font",{"crossOrigin":"","type":"font/ttf"}]
+:HL["/dubas/_next/static/chunks/1_vekj2y8e59j.css","style"]
+4:[["children",{"s":"__PAGE__","h":160}]]
+3:[["children",{"s":{"n":"slug","t":"d","k":"forma-interiors","s":[]},"h":65632,"c":"$Q4"}]]
+2:[["children",{"s":"work","h":131168,"c":"$Q3"}]]
+1:[["children",{"s":"(ru)","h":131184,"c":"$Q2"}]]
+0:{"b":"VEnyucs9aleyICQv47ex0","t":{"t":{"s":"","h":131152,"c":"$Q1"}}}
