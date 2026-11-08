@@ -1,0 +1,10 @@
+node_modules/
+.next/
+out/
+.env*
+!.env.example
+*.tsbuildinfo
+.qa/
+nodra-static.zip
+nodra-app.zip
+.data/

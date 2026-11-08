@@ -1,0 +1,21 @@
+import type { Metadata } from 'next';
+import { homePath, privacyPath, site, workPath, type Locale, type Project } from './content';
+
+export const indexable = process.env.SITE_INDEXABLE === 'true' && Boolean(site.url && site.providerName && site.providerTaxId && (site.email || site.telegram));
+
+export function metadata(locale: Locale, page: 'home' | 'privacy' | Project = 'home'): Metadata {
+  const isProject = typeof page === 'object';
+  const title = isProject ? `${page.text[locale].title} | NODRA` : page === 'privacy' ? `${locale === 'ru' ? 'Конфиденциальность' : 'Privacy'} | NODRA` : locale === 'ru' ? 'NODRA · Дизайн и разработка сайтов' : 'NODRA · Website design and development';
+  const description = isProject ? page.text[locale].description : locale === 'ru' ? 'Интернет-магазины, сайты-визитки, лендинги и многостраничные сайты. На основе шаблона или с индивидуальной разработкой.' : 'Online shops, business card websites, landing pages and multi-page sites. Template-based or custom development.';
+  const path = (lang: Locale) => isProject ? workPath(lang, page.slug) : page === 'privacy' ? privacyPath(lang) : homePath(lang);
+  return {
+    metadataBase: new URL(site.url || 'http://localhost:3000'),
+    title, description,
+    applicationName: 'NODRA',
+    robots: { index: indexable, follow: indexable },
+    ...(site.url ? { alternates: { canonical: `${site.url}${path(locale)}`, languages: { ru: `${site.url}${path('ru')}`, en: `${site.url}${path('en')}`, 'x-default': `${site.url}${path('ru')}` } } } : {}),
+    openGraph: { title, description, type: 'website', siteName: 'NODRA', locale: locale === 'ru' ? 'ru_RU' : 'en_US', alternateLocale: locale === 'ru' ? 'en_US' : 'ru_RU', ...(site.url ? { url: `${site.url}${path(locale)}` } : {}), images: [{ url: '/og.png', width: 1200, height: 630, alt: locale === 'ru' ? 'NODRA. Дизайн и разработка сайтов.' : 'NODRA. Website design and development.' }] },
+    twitter: { card: 'summary_large_image', title, description, images: ['/og.png'] },
+    icons: { icon: '/favicon.svg' },
+  };
+}
