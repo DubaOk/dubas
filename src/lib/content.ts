@@ -2,7 +2,7 @@ export type Locale = 'ru' | 'en';
 export type ProjectId = 'marta' | 'forma' | 'daily';
 
 export const site = {
-  name: 'NODRA',
+  name: 'Dubas',
   telegram: null as string | null,
   email: null as string | null,
   providerName: null as string | null,
@@ -76,8 +76,8 @@ export const copy = {
     provider: 'Исполнитель: физическое лицо, плательщик НПД. Имя и реквизиты будут добавлены до публикации.',
     back: 'Все работы', projectTask: 'Задача', projectSolution: 'Что сделано', projectDetails: 'О проекте', projectRole: 'Роль', projectFormat: 'Формат',
     visit: 'Открыть сайт', nextProject: 'Следующий проект', conceptNotice: 'Авторский дизайн-концепт. Это демонстрационная работа для вымышленного бренда, а не выполненный заказ.',
-    realNotice: 'Запущенный проект. Дизайн, разработка, подключение оплаты и запуск выполнены автором NODRA.',
-    privacyTitle: 'Конфиденциальность', privacyIntro: 'Как устроена обработка данных в текущей версии NODRA.',
+    realNotice: 'Запущенный проект. Дизайн, разработка, подключение оплаты и запуск выполнены автором Dubas.',
+    privacyTitle: 'Конфиденциальность', privacyIntro: 'Как устроена обработка данных в текущей версии Dubas.',
     privacySections: [
       ['Форма заявки', 'Для предварительной оценки и обратной связи форма запрашивает имя, телефон или email, описание задачи и согласие на обработку данных. По желанию можно выбрать тип сайта и подход к разработке. Не указывайте паспортные, платёжные, медицинские и другие сведения, которые не нужны для оценки сайта.'],
       ['Сохранение и срок хранения', 'В текущей локальной версии заявки сохраняются на сервере в папке вне публичных файлов сайта. Сохраняются поля формы, время отправки, версия согласия и срок хранения до 90 дней. Просроченные заявки удаляются при запуске сервера, при новой записи и во время ежедневной проверки работающего сервера. Настройки браузера и данные формы не сохраняются в cookies или localStorage.'],
@@ -149,8 +149,8 @@ export const copy = {
     provider: 'Provider: an individual paying Belarusian professional income tax. The name and provider details will be added before publication.',
     back: 'All projects', projectTask: 'The brief', projectSolution: 'What we did', projectDetails: 'About the project', projectRole: 'Role', projectFormat: 'Format',
     visit: 'Visit website', nextProject: 'Next project', conceptNotice: 'An original design concept for a fictional brand. This is a demonstration project, not a client commission.',
-    realNotice: 'A launched website. The NODRA founder handled design, development, payment integration and launch.',
-    privacyTitle: 'Privacy', privacyIntro: 'How the current version of NODRA handles data.',
+    realNotice: 'A launched website. The Dubas founder handled design, development, payment integration and launch.',
+    privacyTitle: 'Privacy', privacyIntro: 'How the current version of Dubas handles data.',
     privacySections: [
       ['Enquiry form', 'The form requests your name, phone or email, project description and data-processing consent for an estimate and follow-up. Website type and development approach are optional. Do not include identity documents, payment information, medical details or other information unnecessary for a website estimate.'],
       ['Storage and retention', 'In this local version, enquiries are stored on the server outside the public website files. Records include the form fields, submission time, consent version and an expiry date of up to 90 days. Expired records are removed on server startup, when saving a new record and during a daily check while the server is running. The website does not store form details in cookies or localStorage.'],

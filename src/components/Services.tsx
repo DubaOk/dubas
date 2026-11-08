@@ -2,6 +2,7 @@
 
 import { copy, type Locale } from '@/lib/content';
 import { useInquiry } from './InquiryProvider';
+import { ServiceSketch } from './StudioArt';
 import styles from './Site.module.css';
 import formStyles from './Inquiry.module.css';
 
@@ -16,8 +17,8 @@ export function Services({ locale }: { locale: Locale }) {
       </div>
       <p>{t.development[approach].text}</p>
     </div>
-    <div className={styles.servicesGrid}>{t.services.map((service, i) => <article className={`${styles.service} ${formStyles.serviceCard}`} key={service.id}>
-      <div className={styles.serviceTop}><span className={formStyles.serviceSymbol} aria-hidden="true">{['↗', '⌘', '▤', '✳'][i]}</span><span className={styles.smallNumber}>0{i + 1}</span></div>
+    <div className={styles.servicesGrid}>{t.services.map((service, i) => <article className={`${styles.service} ${formStyles.serviceCard}`} key={service.id} data-reveal>
+      <div className={styles.serviceTop}><ServiceSketch kind={service.id} /><span className={styles.smallNumber}>0{i + 1}</span></div>
       <p className={styles.serviceNote}>{service.note}</p><h3>{service.title}</h3><p>{service.text}</p>
       <ul>{service.items.map(item => <li key={item}><span aria-hidden="true">↗</span>{item}</li>)}</ul>
       <a href="#contact" className={styles.serviceLink} onClick={() => setDraft({ service: service.id, approach })}>{t.estimateProject}<span aria-hidden="true">↗</span></a>

@@ -10,7 +10,7 @@ import { createInquiryStore } from '../scripts/inquiry-store.mjs';
 const valid = { name: 'Тестовый посетитель', contact: 'visitor@example.test', description: 'Нужен сайт с каталогом и формой обращения.', service: 'shop', approach: 'template', consent: true, locale: 'ru', website: '' };
 
 async function fixture(t, options = {}) {
-  const directory = await mkdtemp(join(tmpdir(), 'nodra-inquiry-test-'));
+  const directory = await mkdtemp(join(tmpdir(), 'dubas-inquiry-test-'));
   const api = createInquiryApi({ directory, limit: 100, ...options });
   const server = createServer(async (req, res) => { if (!await api.handle(req, res)) { res.writeHead(404); res.end(); } });
   await new Promise(done => server.listen(0, '127.0.0.1', done));
@@ -19,7 +19,7 @@ async function fixture(t, options = {}) {
     api.close(); server.closeAllConnections();
     await new Promise(done => server.close(done));
     const target = resolve(directory);
-    if (dirname(target) !== resolve(tmpdir()) || !basename(target).startsWith('nodra-inquiry-test-')) throw new Error('Unexpected test cleanup path.');
+    if (dirname(target) !== resolve(tmpdir()) || !basename(target).startsWith('dubas-inquiry-test-')) throw new Error('Unexpected test cleanup path.');
     await rm(target, { recursive: true, force: true });
   });
   return { directory, base, send: (payload = valid, headers = {}) => fetch(`${base}/api/inquiries`, { method: 'POST', headers: { 'Content-Type': 'application/json', ...headers }, body: JSON.stringify(payload) }) };

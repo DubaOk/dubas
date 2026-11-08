@@ -1,5 +1,6 @@
 export const inquiryCopy = {
   ru: {
+    previewNote: 'Это тестовая версия сайта. Приём заявок пока отключён, данные не отправляются.', previewSubmit: 'Отправка пока недоступна',
     badge: 'Предварительная оценка', title: ['Расскажите', 'о вашем проекте.'],
     intro: 'Опишите задачу. Поможем выбрать тип сайта и подход к разработке, затем обсудим состав работ, бюджет и сроки.',
     points: [
@@ -23,6 +24,7 @@ export const inquiryCopy = {
     approachOptions: [['template', 'На основе шаблона'], ['custom', 'Индивидуальная разработка']],
   },
   en: {
+    previewNote: 'This is a website preview. Enquiries are disabled and no form data is sent.', previewSubmit: 'Sending is not available yet',
     badge: 'Project estimate', title: ['Tell us about', 'your project.'],
     intro: 'Describe what you need. We will help choose a website format and development approach, then discuss the scope, budget and timeline.',
     points: [

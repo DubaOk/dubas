@@ -27,4 +27,4 @@ const server = createServer(async (req, res) => {
 server.on('close', () => api.close());
 server.requestTimeout = 15000;
 server.headersTimeout = 10000;
-server.listen(port, '127.0.0.1', () => console.log(`NODRA preview and enquiries: http://127.0.0.1:${port}`));
+server.listen(port, '127.0.0.1', () => console.log(`Dubas preview and enquiries: http://127.0.0.1:${port}`));
