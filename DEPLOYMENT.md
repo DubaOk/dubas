@@ -2,6 +2,8 @@
 
 Production: `https://dubas.web.app` (Hosting site `dubas`, Firebase-проект `dubas-portfolio-9a7fbb`), Worker `https://dubas-inquiries.dubaarts.workers.dev`, D1 `dubas-inquiries`, уведомления через `@dubassitebot` в личный Telegram. Биллинг Firebase и платный план Cloudflare не нужны. Квоты бесплатных планов ограничены; после их исчерпания сервис может перестать обслуживать запросы.
 
+17 ноября 2026: сайт опубликован; публичные страницы, 404, метаданные и CORS проверены. Контрольная заявка сохранена в D1 и отправлена в Telegram с первой попытки. Индексация пока закрыта по решению владельца; имя и налоговый номер будут добавлены позже.
+
 ## Настройка аккаунтов один раз
 
 1. Войти через `npx --no-install firebase login` и `npx --no-install wrangler login`. Для нового Google Cloud аккаунта принять условия в консоли, не подключая карту или trial.
@@ -44,7 +46,7 @@ npx --no-install wrangler secret put IP_HASH_SECRET --config worker/wrangler.pro
 
 Вместо трёх отдельных команд `secret put` можно выполнить `npm run telegram:connect` в обычном локальном терминале. Помощник скрыто запросит токен, проверит созданного бота, найдёт Start из личного чата `@DubaArts` через официальный `getUpdates` и загрузит все три секрета в Cloudflare. Он также создаст независимый случайный `IP_HASH_SECRET`. Токен и ответы с перепиской не выводятся. Для повторного подключения потребуется новое сообщение Start, если старое уже недоступно в Bot API.
 
-Созданный в Cloudflare dashboard scoped CI token можно безопасно загрузить в GitHub командой `npm run cloudflare:connect-ci`: скрытый ввод, проверка токена у Cloudflare, запись в GitHub Secret без передачи через аргументы процесса.
+Созданный в Cloudflare dashboard scoped CI token можно безопасно загрузить в GitHub командой `npm run cloudflare:connect-ci`: скрытый ввод, проверка токена, доступа к конкретной базе D1 и Worker у Cloudflare, запись в GitHub Secret без передачи через аргументы процесса. При ошибке 7403 проверьте не только права D1 / Edit, но и выбранный аккаунт в ресурсах токена; нужный ID указан в таблице выше.
 
 При ручной настройке `IP_HASH_SECRET` — независимая случайная строка минимум из 32 байтов. Приватный `chat_id` получить через Bot API `getUpdates` после Start; не использовать сторонних ботов для получения токена или доступа к переписке. Не печатать полные ответы Bot API или токены в общие журналы.
 

@@ -2,6 +2,8 @@
 
 ## Production на web.app
 
+Рабочий адрес: [dubas.web.app](https://dubas.web.app). Заявки хранятся в D1 и приходят владельцу через `@dubassitebot`.
+
 Добавлена схема запуска: Firebase Hosting Spark для страниц, Cloudflare Worker и D1 для заявок, личные уведомления через Telegram. CI/CD находится в `.github/workflows/production.yml`: проверки для PR, автоматическая публикация из `main` после настройки аккаунтов и включения `PRODUCTION_ENABLED=true`.
 
 Пошаговое подключение, GitHub Variables/Secrets, управление заявками и откат описаны в [DEPLOYMENT.md](DEPLOYMENT.md). До подключения секретов production-публикация выключена. Владелец отложил публичные реквизиты: первый запуск использует `SITE_INDEXABLE=false`; после заполнения имени и налогового номера индексацию можно включить. `npm run build:ci` проверяет сборку с тестовыми данными, которые запрещено публиковать. Для настоящего релиза используется `npm run build:production`.
