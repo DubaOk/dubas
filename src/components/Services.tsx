@@ -1,28 +1,41 @@
 'use client';
 
+import Link from 'next/link';
+import { BelarusianRuble } from './BelarusianRuble';
 import { copy, type Locale } from '@/lib/content';
+import { serviceIds, serviceInfo, servicePath, servicePrices, servicesCopy, formatPrice, type DevelopmentApproach } from '@/lib/services';
 import { useInquiry } from './InquiryProvider';
 import { ServiceSketch } from './StudioArt';
-import styles from './Site.module.css';
-import formStyles from './Inquiry.module.css';
+import styles from './Services.module.css';
+import siteStyles from './Site.module.css';
+
+export function ApproachPicker({ locale }: { locale: Locale }) {
+  const t = servicesCopy[locale];
+  const { draft, setDraft } = useInquiry();
+  const approach = draft.approach === 'custom' ? 'custom' : 'template';
+  const current = t.approach[approach];
+  return <div className={styles.approachPanel} data-approach={approach}>
+    <div className={styles.tabs} role="group" aria-label={t.approachLabel}>{(['template', 'custom'] as const).map(key => <button type="button" key={key} aria-pressed={approach === key} onClick={() => setDraft(previous => ({ ...previous, approach: key }))}><span aria-hidden="true">{key === 'template' ? '▤' : '✳'}</span>{t.approach[key].title}</button>)}</div>
+    <div className={styles.approachSummary} key={approach}><div><p className={styles.kicker}>{current.kicker}</p><h3>{current.heading}</h3><p>{current.text}</p></div><ul>{current.facts.map(fact => <li key={fact}><span aria-hidden="true">✓</span>{fact}</li>)}</ul></div>
+  </div>;
+}
 
 export function Services({ locale }: { locale: Locale }) {
-  const t = copy[locale];
+  const t = servicesCopy[locale];
   const { draft, setDraft } = useInquiry();
-  const approach = draft.approach === 'template' ? 'template' : 'custom';
+  const approach: DevelopmentApproach = draft.approach === 'custom' ? 'custom' : 'template';
   return <>
-    <div className={formStyles.approachPicker}>
-      <div className={formStyles.approachButtons} role="group" aria-label={t.approachLabelShort}>
-        {(['template', 'custom'] as const).map(key => <button type="button" key={key} aria-pressed={approach === key} onClick={() => setDraft(previous => ({ ...previous, approach: key }))}><span aria-hidden="true">{key === 'template' ? '▤' : '✳'}</span>{t.development[key].title}</button>)}
-      </div>
-      <p>{t.development[approach].text}</p>
-    </div>
-    <div className={styles.servicesGrid}>{t.services.map((service, i) => <article className={`${styles.service} ${formStyles.serviceCard}`} key={service.id} data-reveal>
-      <div className={styles.serviceTop}><ServiceSketch kind={service.id} /><span className={styles.smallNumber}>0{i + 1}</span></div>
-      <p className={styles.serviceNote}>{service.note}</p><h3>{service.title}</h3><p>{service.text}</p>
-      <ul>{service.items.map(item => <li key={item}><span aria-hidden="true">↗</span>{item}</li>)}</ul>
-      <a href="#contact" className={styles.serviceLink} onClick={() => setDraft({ service: service.id, approach })}>{t.estimateProject}<span aria-hidden="true">↗</span></a>
-    </article>)}</div>
-    <div className={styles.included}><span aria-hidden="true">✦</span><h3>{t.included}</h3><p>{t.includedText}</p></div>
+    <ApproachPicker locale={locale} />
+    <p className={styles.srOnly} role="status">{t.approach[approach].title}</p>
+    <div className={styles.cards} data-approach={approach}>{serviceIds.map((id, index) => {
+      const service = serviceInfo(locale, id);
+      const plan = t.formats[id][approach];
+      return <article className={styles.card} key={id} data-service={id}>
+        <Link href={servicePath(locale, id)} className={styles.previewLink} onClick={() => setDraft(previous => ({ ...previous, service: id }))} aria-label={`${t.example}: ${service.title}`}><ServiceSketch kind={id} /><span className={styles.previewArrow} aria-hidden="true">↗</span></Link>
+        <div className={styles.cardBody}><div className={styles.cardLabel}><span>{service.note}</span><span>0{index + 1}</span></div><h3><Link href={servicePath(locale, id)} onClick={() => setDraft(previous => ({ ...previous, service: id }))}>{service.title}</Link></h3><div className={styles.planCopy} key={approach}><p>{plan.text}</p><ul>{plan.items.map(item => <li key={item}><span aria-hidden="true">↗</span>{item}</li>)}</ul></div><div className={styles.cardBottom}><p className={styles.price} data-price={servicePrices[id][approach]}><span>{t.from}</span><strong>{formatPrice(servicePrices[id][approach])}</strong><span><BelarusianRuble locale={locale} /></span></p><span className={styles.modeLabel}>{t.approach[approach].title}</span></div><div className={styles.cardLinks}><Link href={servicePath(locale, id)} onClick={() => setDraft(previous => ({ ...previous, service: id }))}>{t.example}<span aria-hidden="true">↗</span></Link><a href="#contact" onClick={() => setDraft({ service: id, approach })}>{copy[locale].estimateProject}<span aria-hidden="true">↗</span></a></div></div>
+      </article>;
+    })}</div>
+    <p className={styles.priceNote}>{t.currencyNote}</p>
+    <div className={siteStyles.included}><span aria-hidden="true">✦</span><h3>{copy[locale].included}</h3><p>{copy[locale].includedText}</p></div>
   </>;
 }

@@ -1,6 +1,6 @@
 export const serviceIds = ['shop', 'business-card', 'landing', 'multi-page', 'unsure'];
 export const approachIds = ['template', 'custom', 'unsure'];
-export const consentVersion = 'estimate-v1-2026-11-06';
+export const consentVersion = 'estimate-v2-2026-11-16';
 
 export function validateInquiry(input) {
   const source = input && typeof input === 'object' && !Array.isArray(input) ? input : {};

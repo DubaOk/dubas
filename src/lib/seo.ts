@@ -2,13 +2,16 @@ import { publicPath, staticPreview } from './deployment';
 import type { Metadata } from 'next';
 import { homePath, privacyPath, site, workPath, type Locale, type Project } from './content';
 
+import { serviceIds, serviceInfo, servicePath, servicesCopy, type ServiceId } from './services';
+
 export const indexable = !staticPreview && process.env.SITE_INDEXABLE === 'true' && Boolean(site.url && site.providerName && site.providerTaxId && (site.email || site.telegram));
 
-export function metadata(locale: Locale, page: 'home' | 'privacy' | Project = 'home'): Metadata {
+export function metadata(locale: Locale, page: 'home' | 'privacy' | Project | ServiceId = 'home'): Metadata {
   const isProject = typeof page === 'object';
-  const title = isProject ? `${page.text[locale].title} | Dubas` : page === 'privacy' ? `${locale === 'ru' ? 'Конфиденциальность' : 'Privacy'} | Dubas` : locale === 'ru' ? 'Dubas · Дизайн и разработка сайтов' : 'Dubas · Website design and development';
-  const description = isProject ? page.text[locale].description : locale === 'ru' ? 'Интернет-магазины, сайты-визитки, лендинги и многостраничные сайты. На основе шаблона или с индивидуальной разработкой.' : 'Online shops, business card websites, landing pages and multi-page sites. Template-based or custom development.';
-  const path = (lang: Locale) => isProject ? workPath(lang, page.slug) : page === 'privacy' ? privacyPath(lang) : homePath(lang);
+  const service = typeof page === 'string' && serviceIds.includes(page as ServiceId) ? page as ServiceId : null;
+  const title = service ? `${serviceInfo(locale, service).title} | Dubas` : isProject ? `${page.text[locale].title} | Dubas` : page === 'privacy' ? `${locale === 'ru' ? 'Конфиденциальность' : 'Privacy'} | Dubas` : locale === 'ru' ? 'Dubas · Дизайн и разработка сайтов' : 'Dubas · Website design and development';
+  const description = service ? servicesCopy[locale].formats[service].audience : isProject ? page.text[locale].description : locale === 'ru' ? 'Интернет-магазины, сайты-визитки, лендинги и многостраничные сайты. На основе шаблона или с индивидуальной разработкой.' : 'Online shops, business card websites, landing pages and multi-page sites. Template-based or custom development.';
+  const path = (lang: Locale) => service ? servicePath(lang, service) : isProject ? workPath(lang, page.slug) : page === 'privacy' ? privacyPath(lang) : homePath(lang);
   return {
     metadataBase: new URL(site.url || 'http://localhost:3000'),
     title, description,

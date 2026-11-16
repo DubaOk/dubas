@@ -4,10 +4,11 @@ import { copy, homePath, privacyPath, projects, site, workPath, type Locale, typ
 import { publicPath, staticPreview } from '@/lib/deployment';
 import { Header } from './Header';
 import { InquiryForm } from './InquiryForm';
+import { hostedPrivacySections } from '@/lib/hosted-privacy';
 import { Services } from './Services';
 import { Brand } from './Brand';
 import { Process } from './Process';
-import { ApproachArt, FaqArt } from './StudioArt';
+import { ApproachArt } from './StudioArt';
 import { inquiryCopy } from '@/lib/inquiry-content';
 import inquiryStyles from './Inquiry.module.css';
 import styles from './Site.module.css';
@@ -29,7 +30,7 @@ export function Footer({ locale }: { locale: Locale }) {
 
 export function Contact({ locale }: { locale: Locale }) {
   const t = inquiryCopy[locale];
-  return <section id="contact" className={inquiryStyles.section} aria-labelledby="contact-title" data-reveal><div className={inquiryStyles.pitch}><p className={inquiryStyles.badge}><span aria-hidden="true">✳</span>{t.badge}</p><h2 id="contact-title">{t.title[0]}<br />{t.title[1]}</h2><p className={inquiryStyles.intro}>{t.intro}</p><div className={inquiryStyles.points}>{t.points.map(([title, text], i) => <div key={title}><span aria-hidden="true">{i === 0 ? '▤' : '↗'}</span><h3>{title}</h3><p>{text}</p></div>)}</div><div className={inquiryStyles.art} aria-hidden="true"><span>✳</span><i /><b>d.</b></div>{(site.telegram || site.email) && <div className={inquiryStyles.directLinks}>{site.telegram && <a href={site.telegram} target="_blank" rel="noopener noreferrer">Telegram ↗</a>}{site.email && <a href={`mailto:${site.email}`}>Email ↗</a>}</div>}</div><InquiryForm locale={locale} /></section>;
+  return <section id="contact" className={inquiryStyles.section} aria-labelledby="contact-title" data-reveal><div className={inquiryStyles.pitch}><p className={inquiryStyles.badge}><span aria-hidden="true">✳</span>{t.badge}</p><h2 id="contact-title">{t.title[0]}<br /><span>{t.title[1]}</span></h2><p className={inquiryStyles.intro}>{t.intro}</p><div className={inquiryStyles.points}>{t.points.map(([title, text], i) => <div key={title}><span aria-hidden="true">{i === 0 ? '▤' : '↗'}</span><h3>{title}</h3><p>{text}</p></div>)}</div><div className={inquiryStyles.art} aria-hidden="true"><span>✳</span><i /><b>d.</b></div>{(site.telegram || site.email) && <div className={inquiryStyles.directLinks}>{site.telegram && <a href={site.telegram} target="_blank" rel="noopener noreferrer">Telegram ↗</a>}{site.email && <a href={`mailto:${site.email}`}>Email ↗</a>}</div>}</div><InquiryForm locale={locale} /></section>;
 }
 
 export function ProjectVisual({ project, locale, large = false }: { project: Project; locale: Locale; large?: boolean }) {
@@ -49,7 +50,7 @@ export function Home({ locale }: { locale: Locale }) {
   const t = copy[locale];
   return <><Header locale={locale} /><main id="main">
     <section className={styles.hero}><div className={styles.heroText}><p className={styles.eyebrow}><span className={styles.statusDot} />{t.eyebrow}</p><h1>{t.hero[0]}<br /><span>{t.hero[1]}</span><span className={styles.heroPeriod} aria-hidden="true" /></h1><p className={styles.heroIntro}>{t.intro}</p><div className={styles.heroActions}><a href="#contact" className={styles.button}>{t.talk}<Arrow diagonal /></a><a href="#work" className={styles.textLink}>{t.viewWork}<Arrow /></a></div><p className={styles.heroNote}><span aria-hidden="true">↳</span> {t.heroNote}</p></div><HeroArt locale={locale} /></section>
-    <div className={styles.capabilityStrip}>{t.strip.map((item, i) => <span key={item}><span className={styles.stripSymbol} aria-hidden="true">{['✳', '↗', '⌘', '✦'][i]}</span>{item}</span>)}</div>
+    <div className={styles.capabilityStrip}>{t.strip.map((item, i) => <span key={item}><span className={styles.stripSymbol} aria-hidden="true"><span>{['✳︎', '⤢', '⌘', '✦'][i]}</span></span><span>{item}</span></span>)}</div>
 
     <section id="services" className={styles.section}><SectionHeading label={t.servicesLabel} title={t.servicesTitle}>{t.servicesIntro}</SectionHeading><Services locale={locale} /></section>
 
@@ -59,9 +60,8 @@ export function Home({ locale }: { locale: Locale }) {
 
     <section className={styles.pricing} data-reveal><div><p className={styles.eyebrow}>{t.pricingLabel}</p><h2><Lines text={t.pricingTitle} /></h2></div><div><p className={styles.pricingText}>{t.pricingText}</p><a href="#contact" className={styles.button}>{t.talk}<Arrow diagonal /></a><p className={styles.pricingNote}>{t.pricingNote}</p></div><span className={styles.pricingDecoration} aria-hidden="true">✳</span></section>
 
-    <section id="process" className={styles.section}><SectionHeading label={t.processLabel} title={t.processTitle} /><Process locale={locale} /></section>
+    <Process locale={locale} />
 
-    <section id="faq" className={`${styles.section} ${styles.faqSection}`}><div><p className={styles.eyebrow}>{t.faqLabel}</p><h2><Lines text={t.faqTitle} /></h2><FaqArt /></div><div className={styles.faqList}>{t.faq.map(([q, a]) => <details key={q} data-reveal><summary>{q}<span className={styles.faqPlus} aria-hidden="true" /></summary><p>{a}</p></details>)}</div></section>
     <Contact locale={locale} />
   </main><Footer locale={locale} /></>;
 }
@@ -86,5 +86,6 @@ export function Privacy({ locale }: { locale: Locale }) {
     ['Website files', 'Fonts and images are hosted with the website. There are no analytics, tracking pixels, cookies or localStorage writes.'],
     ['Hosting', 'This preview is hosted on GitHub Pages. GitHub determines the handling of technical visitor data.'],
   ];
-  return <><Header locale={locale} privacy /><main id="main" className={styles.legal}><Link className={styles.backLink} href={homePath(locale)}>← {t.home}</Link><p className={styles.eyebrow}>Dubas / {locale === 'ru' ? 'ИНФОРМАЦИЯ' : 'INFORMATION'}</p><h1>{t.privacyTitle}</h1><p className={styles.legalIntro}>{t.privacyIntro}</p>{(staticPreview ? previewSections : t.privacySections).map(([title, text]) => <section key={title}><h2>{title}</h2><p>{text}</p></section>)}</main><Footer locale={locale} /></>;
+  const sections = staticPreview ? previewSections : process.env.NEXT_PUBLIC_INQUIRY_ENDPOINT?.startsWith('https://') ? hostedPrivacySections(locale, site) : t.privacySections;
+  return <><Header locale={locale} privacy /><main id="main" className={styles.legal}><Link className={styles.backLink} href={homePath(locale)}>← {t.home}</Link><p className={styles.eyebrow}>Dubas / {locale === 'ru' ? 'ИНФОРМАЦИЯ' : 'INFORMATION'}</p><h1>{t.privacyTitle}</h1><p className={styles.legalIntro}>{t.privacyIntro}</p>{sections.map(([title, text]) => <section key={title}><h2>{title}</h2><p>{text}</p></section>)}</main><Footer locale={locale} /></>;
 }

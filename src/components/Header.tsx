@@ -3,17 +3,18 @@
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { copy, homePath, privacyPath, workPath, type Locale } from '@/lib/content';
+import { servicePath } from '@/lib/services';
 import { publicPath } from '@/lib/deployment';
 import { Brand } from './Brand';
 import styles from './Site.module.css';
 
-export function Header({ locale, slug, privacy = false }: { locale: Locale; slug?: string; privacy?: boolean }) {
+export function Header({ locale, slug, serviceSlug, privacy = false }: { locale: Locale; slug?: string; serviceSlug?: string; privacy?: boolean }) {
   const [open, setOpen] = useState(false);
   const button = useRef<HTMLButtonElement>(null);
   const nav = useRef<HTMLElement>(null);
   const t = copy[locale];
   const other = locale === 'ru' ? 'en' : 'ru';
-  const otherPath = slug ? workPath(other, slug) : privacy ? privacyPath(other) : homePath(other);
+  const otherPath = serviceSlug ? servicePath(other, serviceSlug) : slug ? workPath(other, slug) : privacy ? privacyPath(other) : homePath(other);
   const [hash, setHash] = useState('');
   useEffect(() => {
     const update = () => setHash(window.location.hash);

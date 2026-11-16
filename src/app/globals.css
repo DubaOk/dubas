@@ -1,13 +1,15 @@
 :root{--ink:#242824;--muted:#71756e;--green:#00856a;--line:#dedfd8;--paper:#fff;--cream:#f7f7f2;--lilac:#c5b0ec;--yellow:#f5d56b;--pink:#efa5bc;--header-height:112px;--content-width:1640px;--wide-width:1760px;--page-gutter:clamp(28px,3vw,64px);--wide-gutter:clamp(16px,1.5vw,32px)}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:calc(var(--header-height) + 16px)}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-manrope),Arial,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-manrope),Arial,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;cursor:default}
 body:has(button[aria-expanded="true"]){overscroll-behavior:none}
-a{color:inherit;text-decoration:none}
+a{color:inherit;text-decoration:none;cursor:pointer}
 button{font:inherit;color:inherit}
 button,a,summary{-webkit-tap-highlight-color:transparent}
 button{cursor:pointer}
 button:disabled{cursor:default}
+input:not([type="checkbox"]):not([type="radio"]):not([type="button"]):not([type="submit"]),textarea,[contenteditable="true"]{cursor:text}
+select,label[for]{cursor:pointer}
 img,svg{display:block;max-width:100%}
 h1,h2,h3,p{margin:0}
 h1,h2,h3{font-weight:600;line-height:1.15}

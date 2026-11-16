@@ -19,6 +19,7 @@ export function InquiryForm({ locale }: { locale: Locale }) {
   const success = useRef<HTMLDivElement>(null);
   const pending = useRef(false);
   const controller = useRef<AbortController | null>(null);
+  const submission = useRef<{ fingerprint: string; key: string } | null>(null);
   useEffect(() => () => controller.current?.abort(), []);
   useEffect(() => { if (saved) success.current?.focus(); }, [saved]);
 
@@ -39,16 +40,21 @@ export function InquiryForm({ locale }: { locale: Locale }) {
     const result = validateInquiry(payload);
     setRequestError('');
     if (!result.valid) { markErrors(Object.keys(result.errors)); return; }
+    const fingerprint = JSON.stringify(payload);
+    if (!submission.current || submission.current.fingerprint !== fingerprint) {
+      submission.current = { fingerprint, key: crypto.randomUUID() };
+    }
     setErrors({}); pending.current = true; setSending(true);
     controller.current = new AbortController();
     const timeout = setTimeout(() => controller.current?.abort(), 15000);
     try {
-      const response = await fetch(process.env.NEXT_PUBLIC_INQUIRY_ENDPOINT || '/api/inquiries', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), signal: controller.current.signal });
+      const response = await fetch(process.env.NEXT_PUBLIC_INQUIRY_ENDPOINT || '/api/inquiries', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Idempotency-Key': submission.current.key }, body: JSON.stringify(payload), signal: controller.current.signal });
       const body = await response.json();
       if (response.status === 422 && Array.isArray(body.fields) && body.fields.length) { markErrors(body.fields); return; }
       if (response.status === 429) { setRequestError(t.rateLimit); return; }
       if (!response.ok || body.status !== 'saved' || typeof body.id !== 'string') throw new Error('Delivery was not confirmed.');
       setSaved(true);
+      submission.current = null;
     } catch { setRequestError(t.error); }
     finally { clearTimeout(timeout); pending.current = false; setSending(false); }
   }

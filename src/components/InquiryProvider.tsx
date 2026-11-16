@@ -6,7 +6,7 @@ type Draft = { service: string; approach: string };
 const Context = createContext<{ draft: Draft; setDraft: Dispatch<SetStateAction<Draft>> } | null>(null);
 
 export function InquiryProvider({ children }: { children: ReactNode }) {
-  const [draft, setDraft] = useState<Draft>({ service: 'unsure', approach: 'custom' });
+  const [draft, setDraft] = useState<Draft>({ service: 'unsure', approach: 'template' });
   return <Context.Provider value={{ draft, setDraft }}>{children}</Context.Provider>;
 }
 

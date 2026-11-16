@@ -24,7 +24,7 @@ export function createInquiryApi({ directory, allowedOrigins = [], limit = 8, wi
     if (origin && !sameOrigin && !allowedOrigins.includes(origin)) { json(res, 403, { error: 'origin' }); return true; }
     if (origin) { res.setHeader('Access-Control-Allow-Origin', origin); res.setHeader('Vary', 'Origin'); }
     if (req.method === 'OPTIONS') {
-      res.writeHead(204, { 'Access-Control-Allow-Methods': 'POST, OPTIONS', 'Access-Control-Allow-Headers': 'Content-Type', 'Access-Control-Max-Age': '600' }); res.end(); return true;
+      res.writeHead(204, { 'Access-Control-Allow-Methods': 'POST, OPTIONS', 'Access-Control-Allow-Headers': 'Content-Type, Idempotency-Key', 'Access-Control-Max-Age': '600' }); res.end(); return true;
     }
     if (req.method !== 'POST') { json(res, 405, { error: 'method' }, { Allow: 'POST, OPTIONS' }); return true; }
     if (req.headers['content-type']?.split(';')[0].trim().toLowerCase() !== 'application/json') { json(res, 415, { error: 'content_type' }); return true; }

@@ -1,0 +1,4 @@
+# Local Wrangler only. Never commit .dev.vars or real bot credentials.
+TELEGRAM_BOT_TOKEN=
+TELEGRAM_CHAT_ID=
+IP_HASH_SECRET=

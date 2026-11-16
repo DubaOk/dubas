@@ -24,13 +24,11 @@ export function ApproachArt() {
 export function ProcessArt({ step, title }: { step: number; title: string }) {
   return <div className={styles.processArt} data-stage={step} aria-hidden="true">
     <div className={styles.processOrbit} /><span className={styles.processPetal}>✳</span>
-    <div className={styles.processWindow}><div className={styles.sketchBar}><i /><i /><i /><span /></div><div className={styles.processDrawing} key={step}>
-      {step === 0 ? <div className={styles.discussion}><span /><span /><i>↗</i></div> : step === 1 ? <div className={styles.wireframe}><b /><div><i /><i /><i /></div><span /><span /></div> : step === 2 ? <div className={styles.palette}><span /><span /><span /><span /><b>Aa</b></div> : step === 3 ? <div className={styles.codeDrawing}><b>&lt;/&gt;</b><i /><i /><i /><i /></div> : <div className={styles.launchDrawing}><span>✓</span><i /><i /></div>}
-    </div><div className={styles.processCaption}><span>0{step + 1}</span><b>{title}</b><i>↗</i></div></div>
+    <div className={styles.processWindow}><div className={styles.sketchBar}><i /><i /><i /><span /></div><div className={styles.processDrawing}>
+      {[0, 1, 2, 3, 4].map(stage => <div key={stage} className={styles.processScene} data-current={step === stage} data-past={stage < step}>
+        {stage === 0 ? <div className={styles.discussion}><span /><span /><i>↗</i></div> : stage === 1 ? <div className={styles.wireframe}><b /><div><i /><i /><i /></div><span /><span /></div> : stage === 2 ? <div className={styles.palette}><span /><span /><span /><span /><b>Aa</b></div> : stage === 3 ? <div className={styles.codeDrawing}><b>&lt;/&gt;</b><i /><i /><i /><i /></div> : <div className={styles.launchDrawing}><span>✓</span><i /><i /></div>}
+      </div>)}
+    </div><div className={styles.processCaption}><span key={`number-${step}`}>0{step + 1}<small> / 05</small></span><b key={title}>{title}</b><i>↗</i></div><div className={styles.processMeter}>{[0, 1, 2, 3, 4].map(stage => <span key={stage} data-filled={stage <= step} />)}</div></div>
     <span className={styles.processDot} />
   </div>;
-}
-
-export function FaqArt() {
-  return <div className={styles.faqArt} aria-hidden="true"><span>✳</span><i /><b>?</b><em /></div>;
 }

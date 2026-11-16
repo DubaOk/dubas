@@ -1,0 +1,20 @@
+import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { resolve } from 'node:path';
+import { deploymentAddresses } from './production-config.mjs';
+
+const config = deploymentAddresses();
+for (const name of ['FIREBASE_PROJECT_ID', 'CLOUDFLARE_ACCOUNT_ID', 'CLOUDFLARE_D1_DATABASE_ID']) if (!process.env[name]) throw new Error(`Set ${name}.`);
+if (!/^[a-f0-9]{32}$/.test(process.env.CLOUDFLARE_ACCOUNT_ID)) throw new Error('Invalid Cloudflare account ID.');
+if (!/^[a-f0-9-]{36}$/.test(process.env.CLOUDFLARE_D1_DATABASE_ID) || /^0+-0+-0+-0+-0+$/.test(process.env.CLOUDFLARE_D1_DATABASE_ID)) throw new Error('Set the real D1 database ID.');
+if (!/^[a-z][a-z0-9-]{4,28}[a-z0-9]$/.test(process.env.FIREBASE_PROJECT_ID)) throw new Error('Invalid Firebase project ID.');
+const worker = JSON.parse(await readFile('worker/wrangler.jsonc', 'utf8'));
+worker.account_id = process.env.CLOUDFLARE_ACCOUNT_ID;
+worker.d1_databases[0].database_id = process.env.CLOUDFLARE_D1_DATABASE_ID;
+worker.vars = { ALLOWED_ORIGINS: config.site, DEPLOY_REVISION: process.env.GITHUB_SHA || 'local' };
+await writeFile('worker/wrangler.production.json', JSON.stringify(worker, null, 2) + '\n');
+const firebase = JSON.parse(await readFile('firebase.json', 'utf8'));
+firebase.hosting.site = config.siteId;
+firebase.hosting.public = resolve('out');
+await mkdir('.deployment', { recursive: true });
+await writeFile('.deployment/firebase.json', JSON.stringify(firebase, null, 2) + '\n');
+console.log('Production configuration generated (credentials are not included).');

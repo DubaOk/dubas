@@ -8,6 +8,15 @@ out/
 nodra-static.zip
 nodra-app.zip
 .data/
+.wrangler/
+**/.wrangler/
+.firebase/
+.deployment/
+firebase-debug*.log
+firestore-debug*.log
+worker/.dev.vars
+worker/wrangler.production.json
+*service-account*.json
 
 dubas-static.zip
 dubas-app.zip
