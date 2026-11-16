@@ -58,12 +58,16 @@
 .security svg{flex-shrink:0;margin-top:1px;color:#77896d}
 .requestError{font-size:11px;line-height:1.8;color:#a4352d;border-left:2px solid #c78378;padding-left:11px;margin-top:15px}
 .honeypot{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}
-.success{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;min-height:550px;padding:25px 10px;outline:none}
-.successMark{display:grid;place-items:center;border-radius:50%;background:#e8f0e3;color:var(--green);width:62px;height:62px;font-size:30px;margin-bottom:25px}
-.success h3{font-size:30px;font-weight:500;letter-spacing:-1px;line-height:1.25;margin-bottom:18px}
-.success p{font-size:13px;line-height:1.9;color:var(--muted);max-width:300px}
-.success button{display:flex;align-items:center;gap:25px;justify-content:space-between;border:0;border-bottom:1px solid var(--ink);background:transparent;padding:12px 0;margin-top:25px;font-size:12px}
-.success button:hover{color:var(--green)}
+.success{display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:550px;padding:38px 25px 42px;border:1px solid #e9ecdf;border-radius:5px;background:#fbfcf8;text-align:center;outline:none;animation:successAppear .35s ease-out both;scroll-margin-top:calc(var(--header-height) + 20px)}
+.success:focus-visible{outline:2px solid var(--green);outline-offset:4px}
+.successArt{width:190px;height:auto;flex-shrink:0;margin-bottom:25px}
+.success h3{font-size:clamp(30px,3vw,40px);font-weight:500;letter-spacing:-1.5px;line-height:1.15;margin-bottom:17px;text-wrap:balance}
+.success p{font-size:14px;line-height:1.85;color:#626b5e;max-width:340px;text-wrap:pretty}
+.success button{display:flex;align-items:center;gap:20px;justify-content:space-between;width:100%;max-width:300px;min-height:52px;border:1px solid #bed0bd;border-radius:3px;background:transparent;color:#143d32;padding:13px 17px;margin-top:31px;font-size:12px;font-weight:500;transition:background .2s,border-color .2s}
+.success button>span{font-size:21px;font-weight:400;line-height:1}
+.success button:hover{background:#edf3e9;border-color:#7da68e}
+@keyframes successAppear{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.success{animation:none}}
 @keyframes inquirySpin{to{rotate:360deg}}
 @keyframes inquiryFloat{50%{translate:0 -13px}}
 @media(max-width:1100px){.approachPicker{gap:25px;align-items:flex-start}.approachButtons button{font-size:10px;padding-inline:13px;gap:8px}.approachPicker>p{font-size:10px}.section{padding:42px;gap:35px}.pitch h2{font-size:47px;letter-spacing:-2px}.intro{font-size:13px}.formCard{padding:25px}.selectRow{grid-template-columns:1fr}.selectRow .field{margin-bottom:14px}.field select{font-size:11px}.points{gap:20px}.points h3{font-size:11px}.points p{font-size:10px}}

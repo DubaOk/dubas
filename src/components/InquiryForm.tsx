@@ -21,7 +21,11 @@ export function InquiryForm({ locale }: { locale: Locale }) {
   const controller = useRef<AbortController | null>(null);
   const submission = useRef<{ fingerprint: string; key: string } | null>(null);
   useEffect(() => () => controller.current?.abort(), []);
-  useEffect(() => { if (saved) success.current?.focus(); }, [saved]);
+  useEffect(() => {
+    if (!saved || !success.current) return;
+    success.current.focus({ preventScroll: true });
+    success.current.scrollIntoView({ block: 'center', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  }, [saved]);
 
   function markErrors(fields: string[]) {
     const messages: Record<string, string> = {};
@@ -61,7 +65,23 @@ export function InquiryForm({ locale }: { locale: Locale }) {
 
   const required = <span className={styles.required} aria-label={t.required}>*</span>;
   return <div className={styles.formCard}>
-    {saved ? <div className={styles.success} ref={success} tabIndex={-1} role="status"><span className={styles.successMark} aria-hidden="true">✓</span><h3>{t.successTitle}</h3><p>{t.successText}</p><button type="button" onClick={() => { setSaved(false); setErrors({}); setRequestError(''); }}>{t.another}<span aria-hidden="true">↗</span></button></div> : <form ref={form} onSubmit={submit} noValidate aria-busy={sending}>
+    {saved ? <div className={styles.success} ref={success} tabIndex={-1} role="status" aria-labelledby="inquiry-success-title">
+      <svg className={styles.successArt} viewBox="0 0 200 174" fill="none" aria-hidden="true">
+        <circle cx="91" cy="85" r="62" fill="#C5B0EC" />
+        <path d="m160 15 5 14 14-5-8 13 13 8-15 1 1 15-9-12-12 9 5-14-14-5 15-4-4-15 10 11Z" fill="#F5D56B" />
+        <g transform="rotate(-9 95 88)">
+          <rect x="48" y="29" width="94" height="119" rx="9" fill="#FFFEF9" stroke="#143D32" strokeWidth="1.5" />
+          <path d="M66 53h37M66 65h57M66 77h48" stroke="#143D32" strokeOpacity=".25" strokeWidth="3" strokeLinecap="round" />
+          <path d="M66 124h24" stroke="#143D32" strokeOpacity=".25" strokeWidth="3" strokeLinecap="round" />
+        </g>
+        <circle cx="138" cy="126" r="28" fill="#00856A" stroke="#FFFEF9" strokeWidth="4" />
+        <path d="m126 126 8 8 16-17" stroke="white" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" />
+        <circle cx="29" cy="132" r="6" fill="#00856A" />
+      </svg>
+      <h3 id="inquiry-success-title">{t.successTitle}</h3>
+      <p>{t.successText}</p>
+      <button type="button" onClick={() => { setSaved(false); setErrors({}); setRequestError(''); }}>{t.another}<span aria-hidden="true">↗</span></button>
+    </div> : <form ref={form} onSubmit={submit} noValidate aria-busy={sending}>
       <p className={styles.formHeading}>{t.formTitle}<span aria-hidden="true">↗</span></p>
       {staticPreview && <p className={styles.previewNote}>{t.previewNote}</p>}
       <fieldset className={styles.fields} disabled={staticPreview}>
