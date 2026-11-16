@@ -153,4 +153,7 @@ test('IP hashing uses a secret; production builds reject missing and fixture ide
   assert.notEqual(await hashIp('192.0.2.1', 'first'), await hashIp('192.0.2.1', 'second'));
   assert.throws(() => productionConfig({}), /NEXT_PUBLIC_SITE_URL/);
   assert.throws(() => productionConfig(ciFixture), /must be real/);
+  const unpublishedIdentity = { ...ciFixture, NEXT_PUBLIC_PROVIDER_NAME: '', NEXT_PUBLIC_PROVIDER_TAX_ID: '' };
+  assert.equal(productionConfig(unpublishedIdentity).indexable, false);
+  assert.throws(() => productionConfig({ ...unpublishedIdentity, SITE_INDEXABLE: 'true' }), /NEXT_PUBLIC_PROVIDER_NAME/);
 });

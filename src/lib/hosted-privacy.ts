@@ -1,7 +1,7 @@
 import type { Locale } from './content';
 
 export function hostedPrivacySections(locale: Locale, provider: { providerName: string | null; providerTaxId: string | null; telegram: string | null }) {
-  const name = provider.providerName || (locale === 'ru' ? 'Исполнитель ещё не указан' : 'Provider not configured');
+  const name = provider.providerName || 'Dubas';
   const contact = provider.telegram || (locale === 'ru' ? 'Контакт ещё не указан' : 'Contact not configured');
   return locale === 'ru' ? [
     ['Кто обрабатывает данные', `Исполнитель Dubas: ${name}${provider.providerTaxId ? `, налоговый номер ${provider.providerTaxId}` : ''}. Контакт для вопросов о данных: ${contact}.`],

@@ -10,11 +10,13 @@ export function deploymentAddresses(env = process.env) {
 
 export function productionConfig(env = process.env) {
   const config = deploymentAddresses(env);
-  for (const name of ['NEXT_PUBLIC_TELEGRAM_URL', 'NEXT_PUBLIC_PROVIDER_NAME', 'NEXT_PUBLIC_PROVIDER_TAX_ID']) if (!env[name]?.trim()) throw new Error(`Set ${name} before production publication.`);
+  const indexable = env.SITE_INDEXABLE === 'true';
+  const required = ['NEXT_PUBLIC_TELEGRAM_URL', ...(indexable ? ['NEXT_PUBLIC_PROVIDER_NAME', 'NEXT_PUBLIC_PROVIDER_TAX_ID'] : [])];
+  for (const name of required) if (!env[name]?.trim()) throw new Error(`Set ${name} before production publication.`);
   const telegram = new URL(env.NEXT_PUBLIC_TELEGRAM_URL);
   if (telegram.protocol !== 'https:' || telegram.hostname !== 't.me' || !/^\/[a-zA-Z0-9_]{5,32}$/.test(telegram.pathname) || telegram.search || telegram.hash || telegram.username || telegram.password || telegram.port) throw new Error('Use a public https://t.me/username contact.');
   if (/fixture|placeholder|example/i.test(env.NEXT_PUBLIC_PROVIDER_NAME) || /^(0+|1+|123456789)$/.test(env.NEXT_PUBLIC_PROVIDER_TAX_ID)) throw new Error('Production provider information must be real.');
-  return config;
+  return { ...config, indexable };
 }
 
 export const ciFixture = {

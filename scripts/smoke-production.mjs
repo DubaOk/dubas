@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { productionConfig } from './production-config.mjs';
 
-const { site, workerOrigin } = productionConfig();
+const { site, workerOrigin, indexable } = productionConfig();
 async function checkHealth() {
   let lastError;
   for (let attempt = 0; attempt < 6; attempt++) {
@@ -23,7 +23,7 @@ if (!process.argv.includes('--api-only')) {
     assert.equal(response.status, 200, `Missing page ${path}`);
     const html = await response.text();
     assert(html.includes(`href="${site}${path}"`), `Wrong canonical on ${path}`);
-    assert(!/<meta name="robots" content="[^"]*noindex/.test(html), `Noindex on ${path}`);
+    assert.equal(!/<meta name="robots" content="[^"]*noindex/.test(html), indexable, `Wrong indexing setting on ${path}`);
   }
   const missing = await fetch(`${site}/__dubas_missing_page__/`, { signal: AbortSignal.timeout(10000) });
   assert.equal(missing.status, 404, 'Unknown page must return 404.');

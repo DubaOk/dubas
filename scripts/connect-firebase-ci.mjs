@@ -16,7 +16,7 @@ const { access_token: token } = await auth.getAccessToken(account.tokens.refresh
 async function google(url, method = 'GET', body) {
   const response = await fetch(url, { method, headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }, ...(body ? { body: JSON.stringify(body) } : {}), signal: AbortSignal.timeout(20000) });
   const data = await response.json().catch(() => ({}));
-  if (!response.ok) { const error = new Error(`Google API returned HTTP ${response.status} (${data.error?.status || 'request_failed'}).`); error.status = response.status; throw error; }
+  if (!response.ok) { const error = new Error(`Google API returned HTTP ${response.status} (${data.error?.status || 'request_failed'}): ${data.error?.message || 'Request failed'}`); error.status = response.status; throw error; }
   return data;
 }
 const operation = await google(`https://serviceusage.googleapis.com/v1/projects/${project}/services/iam.googleapis.com:enable`, 'POST', {});
@@ -45,7 +45,14 @@ for (const role of ['roles/firebasehosting.admin', 'roles/serviceusage.serviceUs
   if (!binding.members.includes(`serviceAccount:${email}`)) binding.members.push(`serviceAccount:${email}`);
 }
 // Preserve all existing bindings, conditions and the etag (concurrent edits must fail safely).
-await google(`https://cloudresourcemanager.googleapis.com/v1/projects/${project}:setIamPolicy`, 'POST', { policy });
+for (let attempt = 0; ; attempt++) {
+  try { await google(`https://cloudresourcemanager.googleapis.com/v1/projects/${project}:setIamPolicy`, 'POST', { policy }); break; }
+  catch (error) {
+    // Newly created service accounts can take a few seconds to become visible to Resource Manager.
+    if (attempt >= 5 || error.status !== 400 || !/does not exist|not found/i.test(error.message)) throw error;
+    await new Promise(done => setTimeout(done, 2000));
+  }
+}
 const key = await google(`https://iam.googleapis.com/v1/${serviceAccount.name}/keys`, 'POST', { privateKeyType: 'TYPE_GOOGLE_CREDENTIALS_FILE' });
 const credentials = Buffer.from(key.privateKeyData, 'base64');
 const saved = spawnSync('gh', ['secret', 'set', 'FIREBASE_SERVICE_ACCOUNT', '--repo', 'DubaOk/dubas'], { input: credentials, encoding: 'utf8' });

@@ -25,7 +25,7 @@ function SectionHeading({ label, title, children }: { label: string; title: stri
 
 export function Footer({ locale }: { locale: Locale }) {
   const t = copy[locale];
-  return <footer className={styles.footer}><div className={styles.footerTop}><Brand locale={locale} /><p>{t.footer}<br /><span>{t.location}</span></p><Link href={privacyPath(locale)}>{t.privacy} <span aria-hidden="true">↗</span></Link></div><div className={styles.footerSignature} aria-hidden="true" data-reveal><span>{site.name}<i>.</i></span><b>✳</b></div><div className={styles.footerBottom}><p>{site.providerName ? `${site.providerName}${site.providerTaxId ? ` · ${site.providerTaxId}` : ''}` : t.provider}</p><span>© {new Date().getFullYear()} {site.name}</span></div></footer>;
+  return <footer className={styles.footer}><div className={styles.footerTop}><Brand locale={locale} /><p>{t.footer}<br /><span>{t.location}</span></p><Link href={privacyPath(locale)}>{t.privacy} <span aria-hidden="true">↗</span></Link></div><div className={styles.footerSignature} aria-hidden="true" data-reveal><span>{site.name}<i>.</i></span><b>✳</b></div><div className={styles.footerBottom}><p>{site.providerName ? `${site.providerName}${site.providerTaxId ? ` · ${site.providerTaxId}` : ''}` : site.telegram ? 'Dubas' : t.provider}</p><span>© {new Date().getFullYear()} {site.name}</span></div></footer>;
 }
 
 export function Contact({ locale }: { locale: Locale }) {

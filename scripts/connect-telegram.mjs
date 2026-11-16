@@ -24,6 +24,7 @@ async function telegram(method) {
   return data.result;
 }
 const bot = await telegram('getMe');
+if (bot.username?.toLowerCase() !== 'dubassitebot') throw new Error('This project expects @dubassitebot. No secrets were changed.');
 const updates = await telegram('getUpdates');
 const expected = new URL(process.env.NEXT_PUBLIC_TELEGRAM_URL || 'https://t.me/DubaArts').pathname.slice(1).toLowerCase();
 const chat = updates.map(update => update.message).filter(message => message?.chat?.type === 'private' && message.from?.username?.toLowerCase() === expected).at(-1)?.chat;

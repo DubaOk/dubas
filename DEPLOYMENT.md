@@ -1,13 +1,13 @@
 # Dubas: Firebase Hosting и Cloudflare
 
-Production: статические страницы на Firebase Spark, Worker `dubas-inquiries`, D1 `dubas-inquiries`, уведомления в личный Telegram. Биллинг Firebase и платный план Cloudflare не нужны. Квоты бесплатных планов ограничены; после их исчерпания сервис может перестать обслуживать запросы.
+Production: `https://dubas.web.app` (Hosting site `dubas`, Firebase-проект `dubas-portfolio-9a7fbb`), Worker `https://dubas-inquiries.dubaarts.workers.dev`, D1 `dubas-inquiries`, уведомления через `@dubassitebot` в личный Telegram. Биллинг Firebase и платный план Cloudflare не нужны. Квоты бесплатных планов ограничены; после их исчерпания сервис может перестать обслуживать запросы.
 
 ## Настройка аккаунтов один раз
 
 1. Войти через `npx --no-install firebase login` и `npx --no-install wrangler login`. Для нового Google Cloud аккаунта принять условия в консоли, не подключая карту или trial.
 2. Создать Firebase-проект без Analytics и биллинга. Создать Hosting site: последовательно пробовать `dubas`, `dubas-studio`, `dubas-web`. Это идентификатор сайта, он может отличаться от ID проекта. Команда: `npx --no-install firebase hosting:sites:create SITE_ID --project PROJECT_ID`.
 3. D1 уже создана в аккаунте владельца: `0a27a88f-9e6b-4fb8-af61-c9a9e357f4bf`, регион WEUR. Не создавать вторую базу вместо неё.
-4. Через @BotFather создать бота, открыть его чат и нажать Start. Токен вводить в секреты Cloudflare, не в исходники и не в GitHub Variables.
+4. Владелец выбрал бота `@dubassitebot`. Открыть его чат и нажать Start. Токен вводить в секреты Cloudflare, не в исходники и не в GitHub Variables. Помощник подключения проверяет этот username перед сохранением секретов.
 5. Создать сервисный аккаунт Google для GitHub, выдать `roles/firebasehosting.admin` и `roles/serviceusage.serviceUsageConsumer` только в выбранном проекте. Его JSON-ключ загрузить в GitHub Secret `FIREBASE_SERVICE_ACCOUNT`. Не выдавать Owner/Editor. Ключ не хранить в checkout. Помощник `node --env-file=.env.production.local scripts/connect-firebase-ci.mjs` выполняет эти операции через существующий вход Firebase CLI и сразу отправляет ключ в GitHub, не сохраняя его на диск. При уже существующем секрете он останавливается, чтобы не создавать лишние ключи.
 6. Создать Cloudflare API token только для нужного аккаунта с Account / Workers Scripts / Edit и Account / D1 / Edit. При требовании CLI чтения аккаунта добавить Account Settings / Read. Загрузить в GitHub Secret `CLOUDFLARE_API_TOKEN`; OAuth-токен локального Wrangler для CI не подходит.
 
@@ -22,6 +22,7 @@ Repository Settings → Secrets and variables → Actions → Variables:
 | `TELEGRAM_URL` | `https://t.me/DubaArts` |
 | `PROVIDER_NAME` | Реальное имя исполнителя, публично |
 | `PROVIDER_TAX_ID` | Реальный налоговый номер, публично |
+| `SITE_INDEXABLE` | Пока `false`: владелец отложил реквизиты. После заполнения имени и номера — `true` |
 | `FIREBASE_PROJECT_ID` | ID проекта Google/Firebase |
 | `CLOUDFLARE_ACCOUNT_ID` | `9a7fbbb7b9e393c01ecc7718eb9750d7` |
 | `CLOUDFLARE_D1_DATABASE_ID` | `0a27a88f-9e6b-4fb8-af61-c9a9e357f4bf` |
@@ -80,7 +81,7 @@ npm run inquiries:retry -- UUID_ЗАЯВКИ
 ## Первый запуск и наблюдение
 
 1. Проверить `npm test`, `npm run build:ci`, `npm run typecheck`, `npm run worker:check`.
-2. Заполнить реальные GitHub Variables, секреты GitHub и Cloudflare; включить `PRODUCTION_ENABLED=true` и выполнить workflow.
+2. Заполнить реальные GitHub Variables, секреты GitHub и Cloudflare; включить `PRODUCTION_ENABLED=true` и выполнить workflow. По решению владельца реквизиты заполняются позже: первый запуск оставить с `SITE_INDEXABLE=false`. После заполнения имени и налогового номера установить `SITE_INDEXABLE=true` и повторить workflow; до этого sitemap пуст и поисковая индексация закрыта.
 3. Проверить с телефона и компьютера обе локали, вложенные страницы, меню, форму, ссылки, `robots.txt` и `sitemap.xml`. Затем отправить одну явно тестовую заявку с адресом `example.test` и проверить её ID в базе и Telegram.
 4. Добавить итоговый URL в Google Search Console как URL-prefix property. Код HTML-верификации выдаёт Google; добавить соответствующий файл в публичную сборку и отправить `sitemap.xml`. Не обещать немедленного появления в поиске.
 5. Следить за ошибками Actions, квотами Firebase/Cloudflare, статусами `pending`/`failed` в D1. `/health` проверяет схему и наличие секретов; он не проверяет действительность токена Telegram и не раскрывает заявки. Не публиковать административный HTTP API.

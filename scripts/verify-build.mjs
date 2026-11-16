@@ -2,7 +2,7 @@ import { readFile, readdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import assert from 'node:assert/strict';
 
-export async function verifyBuild({ site, endpoint, fixture = false, root = 'out' }) {
+export async function verifyBuild({ site, endpoint, fixture = false, indexable = true, root = 'out' }) {
   const files = [];
   async function walk(path) {
     for (const entry of await readdir(path, { withFileTypes: true })) {
@@ -19,16 +19,16 @@ export async function verifyBuild({ site, endpoint, fixture = false, root = 'out
     assert(!html.includes('/dubas/_next/'), 'Production contains the GitHub Pages prefix.');
     assert(html.includes(`${site}/`), `Missing production domain in ${path}`);
     assert(html.includes('rel="canonical"'), `Missing canonical in ${path}`);
-    assert(!/<meta name="robots" content="[^"]*noindex/.test(html), `Page is not indexable: ${path}`);
+    assert.equal(!/<meta name="robots" content="[^"]*noindex/.test(html), indexable, `Unexpected indexing setting: ${path}`);
     assert(!html.includes('Отправка пока недоступна') && !html.includes('Sending is not available yet'), 'Form is disabled.');
     if (!fixture) assert(!html.includes('CI fixture') && !html.includes('CI-FIXTURE'), 'Fixture content must never be published.');
   }
   await readFile(join(root, '404.html'));
   for (const route of ['index.html', 'en/index.html', 'services/landing/index.html', 'en/services/landing/index.html']) await readFile(join(root, route));
   const robots = await readFile(join(root, 'robots.txt'), 'utf8');
-  assert(robots.includes(`Sitemap: ${site}/sitemap.xml`) && !robots.includes('Disallow: /'), 'robots.txt is not ready.');
+  assert(indexable ? robots.includes(`Sitemap: ${site}/sitemap.xml`) && !robots.includes('Disallow: /') : robots.includes('Disallow: /'), 'Unexpected robots.txt setting.');
   const sitemap = await readFile(join(root, 'sitemap.xml'), 'utf8');
-  assert(sitemap.includes(`${site}/en/`) && sitemap.includes(`${site}/services/landing/`), 'Incomplete sitemap.');
+  assert(indexable ? sitemap.includes(`${site}/en/`) && sitemap.includes(`${site}/services/landing/`) : !sitemap.includes('<url>'), 'Unexpected sitemap contents.');
   let endpointFound = false;
   for (const path of files) {
     assert(!/(?:^|[\\/])(?:\.data|\.env[^\\/]*|\.git|node_modules|worker)(?:[\\/]|$)/.test(path), `Private file in output: ${path}`);
