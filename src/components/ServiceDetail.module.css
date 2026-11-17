@@ -4,3 +4,14 @@
 @media(max-width:380px){.hero h1{font-size:38px}.content h2{font-size:29px}.demoStage{padding:7px}.devices button{font-size:11px}}
 
 .priceCard>p>svg{font-size:24px}.comparisonPrice>svg{font-size:18px}
+
+:global(html[data-theme="dark"]) :is(.back,.eyebrow,.heroText,.priceCard>span,.priceCard small,.scope>div>p:last-child,.scopeCard>p:not(.eyebrow),.comparison>p:not(.exampleNote),.comparisonGrid article>p:not(.eyebrow):not(.comparisonPrice),.other small,.exampleNote){color:var(--muted)}
+:global(html[data-theme="dark"]) :is(.priceCard,.comparisonGrid article[data-selected="true"]){background:var(--surface-green);border-color:#536f51}
+:global(html[data-theme="dark"]) .content[data-approach="custom"] .priceCard,
+:global(html[data-theme="dark"]) .comparisonGrid article:last-child[data-selected="true"]{background:var(--surface-purple);border-color:#79628a}
+:global(html[data-theme="dark"]) .priceCard>a{color:var(--paper)}
+:global(html[data-theme="dark"]) .priceCard>a:hover{color:var(--on-accent)}
+:global(html[data-theme="dark"]) :is(.scopeCard,.comparisonGrid article){background:var(--cream);border-color:var(--line)}
+:global(html[data-theme="dark"]) .comparisonGrid button{background:var(--paper);border-color:var(--line)}
+:global(html[data-theme="dark"]) .comparisonGrid button[aria-pressed="true"]{background:#385a3f;border-color:#6b8e67}
+:global(html[data-theme="dark"]) .comparisonGrid article:last-child button[aria-pressed="true"]{background:#664781;border-color:#9b7ab3}

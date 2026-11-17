@@ -79,3 +79,20 @@
 .previewNote{font-size:13px;line-height:1.8;background:#f1f3eb;border-left:2px solid var(--green);padding:13px 15px;margin-bottom:24px;color:#42604e}
 .fields:disabled .submit{cursor:not-allowed;opacity:.55}
 .fields:disabled :is(input,textarea,select){cursor:not-allowed}
+
+:global(html[data-theme="dark"]) .section{background:#112f25;border:1px solid #2b4d3d}
+:global(html[data-theme="dark"]) .formCard{background:var(--cream);border-color:var(--line)}
+:global(html[data-theme="dark"]) .formHeading{border-color:var(--line)}
+:global(html[data-theme="dark"]) .field :is(input,textarea,select){background:var(--paper);border-color:#4b574a}
+:global(html[data-theme="dark"]) .field :is(input,textarea,select):focus{background:#252f28;border-color:var(--green)}
+:global(html[data-theme="dark"]) .field [aria-invalid="true"]{border-color:#ef9e92;background:#382521}
+:global(html[data-theme="dark"]) :is(.fieldError,.requestError,.consent:has([aria-invalid="true"])){color:#ffb4a8}
+:global(html[data-theme="dark"]) :is(.consent,.security,.security svg,.success p){color:var(--muted)}
+:global(html[data-theme="dark"]) .consent a{color:var(--green)}
+:global(html[data-theme="dark"]) .submit{color:var(--on-accent)}
+:global(html[data-theme="dark"]) .submit:hover:not(:disabled){background:#a0e6ca}
+:global(html[data-theme="dark"]) .success{background:var(--paper);border-color:var(--line)}
+:global(html[data-theme="dark"]) .success button{color:var(--green);border-color:var(--line)}
+:global(html[data-theme="dark"]) .success button:hover{background:var(--surface-green)}
+:global(html[data-theme="dark"]) .previewNote{background:var(--surface-green);color:#c0ddca}
+.art{--ink:#242824}

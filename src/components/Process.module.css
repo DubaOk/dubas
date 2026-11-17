@@ -17,3 +17,16 @@
 @media(max-width:1100px){.spotlight{padding-inline:68px}.controls button:first-child{left:10px}.controls button:last-child{right:10px}}
 @media(max-width:760px){.spotlight{padding-inline:22px}.visual{padding-inline:24px}.controls{top:22px;bottom:auto;height:calc(min(360px,100cqw - 48px)/1.28)}.controls button:first-child{left:8px}.controls button:last-child{right:8px}}
 @media(max-width:380px){.spotlight{padding-inline:16px}.controls{top:16px}}
+
+:global(html[data-theme="dark"]) .spotlight{background:var(--surface-purple);border-color:#4b3d59}
+:global(html[data-theme="dark"]) :is(.counter>span,.endAction a){color:var(--accent-purple)}
+:global(html[data-theme="dark"]) :is(.counter>small,.descriptions article>p,.timeline>div:last-child>span){color:var(--muted)}
+:global(html[data-theme="dark"]) .timeline{border-color:var(--line)}
+:global(html[data-theme="dark"]) .timelineFill{background:var(--accent-purple)}
+:global(html[data-theme="dark"]) .timeline span[data-active="true"]{color:var(--accent-purple)!important}
+:global(html[data-theme="dark"]) .timeline span[data-complete="true"]{color:var(--green)!important}
+:global(html[data-theme="dark"]) .controls button{background:#392e46;color:var(--accent-purple);border-color:#766185}
+:global(html[data-theme="dark"]) .controls button:last-child:not(:disabled),
+:global(html[data-theme="dark"]) .controls button:hover:not(:disabled){background:var(--accent-purple);color:#241c2c;border-color:var(--accent-purple)}
+:global(html[data-theme="dark"]) .controls button:disabled{background:#28232f;color:#8e8199;border-color:#4d4257}
+.art{color:#242824;--ink:#242824;--green:#00856a;color-scheme:light}

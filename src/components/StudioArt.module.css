@@ -159,3 +159,5 @@
 @keyframes captionIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:760px){.processScene{padding:12px}.processCaption>span{font-size:11px}.processCaption small{font-size:9px}}
 @media(max-width:760px){.processArt{max-width:300px;aspect-ratio:1.35}.processDrawing{min-height:0}}
+
+.serviceSketch,.approachArt,.processArt{color:#242824;--ink:#242824;--green:#00856a;color-scheme:light}

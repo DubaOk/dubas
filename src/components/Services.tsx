@@ -1,9 +1,8 @@
 'use client';
 
-import Link from 'next/link';
 import { BelarusianRuble } from './BelarusianRuble';
 import { copy, type Locale } from '@/lib/content';
-import { serviceIds, serviceInfo, servicePath, servicePrices, servicesCopy, formatPrice, type DevelopmentApproach } from '@/lib/services';
+import { serviceIds, serviceInfo, servicePrices, servicesCopy, formatPrice, type DevelopmentApproach } from '@/lib/services';
 import { useInquiry } from './InquiryProvider';
 import { ServiceSketch } from './StudioArt';
 import styles from './Services.module.css';
@@ -31,8 +30,8 @@ export function Services({ locale }: { locale: Locale }) {
       const service = serviceInfo(locale, id);
       const plan = t.formats[id][approach];
       return <article className={styles.card} key={id} data-service={id}>
-        <Link href={servicePath(locale, id)} className={styles.previewLink} onClick={() => setDraft(previous => ({ ...previous, service: id }))} aria-label={`${t.example}: ${service.title}`}><ServiceSketch kind={id} /><span className={styles.previewArrow} aria-hidden="true">↗</span></Link>
-        <div className={styles.cardBody}><div className={styles.cardLabel}><span>{service.note}</span><span>0{index + 1}</span></div><h3><Link href={servicePath(locale, id)} onClick={() => setDraft(previous => ({ ...previous, service: id }))}>{service.title}</Link></h3><div className={styles.planCopy} key={approach}><p>{plan.text}</p><ul>{plan.items.map(item => <li key={item}><span aria-hidden="true">↗</span>{item}</li>)}</ul></div><div className={styles.cardBottom}><p className={styles.price} data-price={servicePrices[id][approach]}><span>{t.from}</span><strong>{formatPrice(servicePrices[id][approach])}</strong><span><BelarusianRuble locale={locale} /></span></p><span className={styles.modeLabel}>{t.approach[approach].title}</span></div><div className={styles.cardLinks}><Link href={servicePath(locale, id)} onClick={() => setDraft(previous => ({ ...previous, service: id }))}>{t.example}<span aria-hidden="true">↗</span></Link><a href="#contact" onClick={() => setDraft({ service: id, approach })}>{copy[locale].estimateProject}<span aria-hidden="true">↗</span></a></div></div>
+        <div className={styles.cardArt}><ServiceSketch kind={id} /></div>
+        <div className={styles.cardBody}><div className={styles.cardLabel}><span>{service.note}</span><span>0{index + 1}</span></div><h3>{service.title}</h3><div className={styles.planCopy} key={approach}><p>{plan.text}</p><ul>{plan.items.map(item => <li key={item}><span aria-hidden="true">↗</span>{item}</li>)}</ul></div><div className={styles.cardBottom}><p className={styles.price} data-price={servicePrices[id][approach]}><span>{t.from}</span><strong>{formatPrice(servicePrices[id][approach])}</strong><span><BelarusianRuble locale={locale} /></span></p><span className={styles.modeLabel}>{t.approach[approach].title}</span></div><div className={styles.cardLinks}><a href="#contact" onClick={() => setDraft({ service: id, approach })}>{copy[locale].estimateProject}<span aria-hidden="true">↗</span></a></div></div>
       </article>;
     })}</div>
     <p className={styles.priceNote}>{t.currencyNote}</p>

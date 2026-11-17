@@ -13,3 +13,27 @@
 @media(max-width:380px){.previewLink{padding-inline:15px}.previewArrow{right:18px;top:18px;width:29px;height:29px;font-size:18px}}
 
 .price>span:last-child{font-size:20px}
+
+.cardArt{display:flex;align-items:center;min-height:205px;padding:25px 32px 0}
+.cardLinks{justify-content:flex-end}
+:global(html[data-theme="dark"]) .approachPanel{background:var(--surface-green);border-color:var(--line)}
+:global(html[data-theme="dark"]) .approachPanel[data-approach="custom"]{background:var(--surface-purple);border-color:#534260}
+:global(html[data-theme="dark"]) .tabs{background:#161b1880;border-color:var(--line)}
+:global(html[data-theme="dark"]) .tabs button:hover:not([aria-pressed="true"]){background:#ffffff10}
+:global(html[data-theme="dark"]) .tabs button[aria-pressed="true"]{background:#3b654b}
+:global(html[data-theme="dark"]) .approachPanel[data-approach="custom"] .tabs button[aria-pressed="true"]{background:#74518e}
+:global(html[data-theme="dark"]) :is(.kicker,.approachSummary>div>p:last-child,.planCopy>p,.price>span,.modeLabel,.cardLinks>a:last-child){color:var(--muted)}
+:global(html[data-theme="dark"]) .approachSummary li>span{color:var(--green)}
+:global(html[data-theme="dark"]) .approachPanel[data-approach="custom"] .approachSummary>div>p:last-child{color:var(--muted)}
+:global(html[data-theme="dark"]) .approachPanel[data-approach="custom"] :is(.kicker,.approachSummary li>span),
+:global(html[data-theme="dark"]) .cards[data-approach="custom"] .planCopy li>span{color:var(--accent-purple)}
+:global(html[data-theme="dark"]) .card{background:var(--cream);border-color:var(--line)}
+:global(html[data-theme="dark"]) .card[data-service="business-card"]{background:var(--surface-green)}
+:global(html[data-theme="dark"]) .card[data-service="landing"]{background:var(--surface-purple)}
+:global(html[data-theme="dark"]) .card[data-service="multi-page"]{background:var(--surface-gold)}
+:global(html[data-theme="dark"]) .cards[data-approach="custom"] .card{border-color:#594568}
+:global(html[data-theme="dark"]) .cardBottom{border-color:var(--line)}
+:global(html[data-theme="dark"]) .cardLinks>a:hover{color:var(--green)}
+@media(max-width:1100px){.cardArt{min-height:180px;padding:15px 25px 0}}
+@media(max-width:760px){.cardArt{padding:16px 24px 0;min-height:175px}}
+@media(max-width:380px){.cardArt{padding-inline:15px}}
