@@ -6,6 +6,7 @@ import { Header } from './Header';
 import { InquiryForm } from './InquiryForm';
 import { hostedPrivacySections } from '@/lib/hosted-privacy';
 import { Services } from './Services';
+import { approachCopy } from '@/lib/approach-content';
 import { Brand } from './Brand';
 import { Process } from './Process';
 import { ApproachArt } from './StudioArt';
@@ -52,7 +53,7 @@ export function Home({ locale }: { locale: Locale }) {
     <section className={styles.hero}><div className={styles.heroText}><p className={styles.eyebrow}><span className={styles.statusDot} />{t.eyebrow}</p><h1>{t.hero[0]}<br /><span>{t.hero[1]}</span><span className={styles.heroPeriod} aria-hidden="true" /></h1><p className={styles.heroIntro}>{t.intro}</p><div className={styles.heroActions}><a href="#contact" className={styles.button}>{t.talk}<Arrow diagonal /></a><a href="#work" className={styles.textLink}>{t.viewWork}<Arrow /></a></div><p className={styles.heroNote}><span aria-hidden="true">↳</span> {t.heroNote}</p></div><HeroArt locale={locale} /></section>
     <div className={styles.capabilityStrip}>{t.strip.map((item, i) => <span key={item}><span className={styles.stripSymbol} aria-hidden="true"><span>{['✳︎', '⤢', '⌘', '✦'][i]}</span></span><span>{item}</span></span>)}</div>
 
-    <section id="services" className={styles.section}><SectionHeading label={t.servicesLabel} title={t.servicesTitle}>{t.servicesIntro}</SectionHeading><Services locale={locale} /></section>
+    <section id="services" className={styles.section}><SectionHeading label={t.servicesLabel} title={approachCopy[locale].intro}>{approachCopy[locale].explanation}</SectionHeading><Services locale={locale} /></section>
 
     <section id="work" className={`${styles.section} ${styles.workSection}`}><SectionHeading label={t.workLabel} title={t.workTitle}>{t.workIntro}</SectionHeading><div className={styles.projectGrid}>{projects.map((project, index) => <article className={`${styles.projectCard} ${project.id === 'daily' ? styles.wideCard : ''}`} key={project.id} data-reveal><Link className={styles.projectImageLink} href={workPath(locale, project.slug)} aria-label={`${t.case}: ${project.text[locale].title}`}><ProjectVisual project={project} locale={locale} /><span className={styles.projectHoverArrow}><Arrow diagonal /></span></Link><div className={styles.projectInfo}><div><p className={styles.projectCategory}>{project.text[locale].category} <span>/</span> {project.kind === 'live' ? t.real : t.concept}</p><h3><Link href={workPath(locale, project.slug)}>{project.text[locale].title}</Link></h3><p className={styles.projectSummary}>{project.text[locale].summary}</p></div><span className={styles.projectIndex}>0{index + 1}</span></div></article>)}</div></section>
 
